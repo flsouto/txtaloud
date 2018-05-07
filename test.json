@@ -1,0 +1,16 @@
+[
+  {
+    "sound" : "",
+    "text" : {
+      "en": "This is an example",
+      "de": "Dies ist ein Beispiel"
+    }
+  },
+  {
+    "sound" : "",
+    "text" : {
+      "en": "This is another example",
+      "de": "Dies ist ein anderes Beispiel"
+    }
+  }
+]

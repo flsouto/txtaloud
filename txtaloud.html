@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TxtAloud</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+</head>
+<body>
+
+    <input type="file" id="uploader" onChange="upload(this)" accept="application/json" />
+
+    <div id="main">
+
+        <div class="entry">
+
+            <div class="text">
+                This is just an example with a lot of words in it, just for testing.
+            </div>
+
+            <div class="text">
+                Dies ist nur ein Beispiel mit vielen Wörtern, nur zum Testen.
+            </div>
+
+
+        </div>
+
+        <div class="entry">
+
+            <div class="text" data-lang="en">
+                This is another an example.
+            </div>
+
+            <div class="text" data-lang="de">
+                Deis ist ein anderes Biespiel.
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <style>
+        .entry{
+            padding:10px;
+            background:snow;
+            border: 1px solid silver;
+            cursor:pointer;
+            margin-top:10px;
+        }
+
+        .entry:hover{
+            background:oldlace;
+        }
+
+        .entry.active{
+            background:honeydew;
+        }
+
+        .entry .text:before{
+            content:"» "
+        }
+
+        .entry .text{
+            font-size:22px;
+            padding:5px;
+        }
+    </style>
+
+    <script>
+
+        var entries = [];
+
+        function upload(input){
+
+            if (input.files && input.files[0]) {
+
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+
+                    try{
+                        entries = JSON.parse(e.target.result);
+                        refreshEntries();
+                    } catch(e){
+                        alert("Couldn't parse json file!");
+                    }
+
+                };
+
+                reader.readAsText(input.files[0]);
+
+            }
+
+        }
+
+        var container = document.getElementById('main');
+
+        function refreshEntries(){
+
+            container.innerHTML = '';
+
+            var entry = '';
+
+            for(var i=0; i<entries.length; i++){
+
+                entry += "<div class=entry>";
+
+                for(var k in entries[i].text){
+                    entry += "<div class='text' data-lang='"+k+"'>"+entries[i].text[k]+"</div>";
+                }
+
+                entry += "</div>";
+
+                container.innerHTML += entry;
+
+            }
+
+
+        }
+
+
+    </script>
+
+
+</body>
+</html>
+

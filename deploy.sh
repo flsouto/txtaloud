@@ -1,0 +1,1 @@
+curl -X PUT http://htput.com/txtaloud --data-binary "@txtaloud.html" --header "Htput-pass: 17ad925"
