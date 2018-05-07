@@ -89,7 +89,7 @@ while(!empty($text_lines[$offsets['text']])){
         $sound = base64_encode(file_get_contents($tmp_file));
         $output[] = [
             'sound' => $sound,
-            'text' => ['de'=>$text];
+            'text' => ['de'=>$text]
         ];
         $offsets['sound'] += $cut+$jump;
         $offsets['text']++;
