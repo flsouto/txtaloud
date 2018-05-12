@@ -96,7 +96,7 @@ while(!empty($text_lines[$offsets['text']])){
 
         file_put_contents($dir.'/offsets.json', json_encode($offsets));
         file_put_contents($dir.'/output.json', json_encode($output));
-
+        $cut = 0;
     }
 
 
