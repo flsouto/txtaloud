@@ -54,7 +54,7 @@ if(file_exists($file = $dir.'/output.json')){
 if(file_exists($file = $dir.'/offsets.json')){
     $offsets = json_decode(file_get_contents($file), true);
 } else {
-    $offsets = ['text' => 0, 'sound' => 0];
+    $offsets = ['text' => 0, 'sound' => 0, 'rates' => []];
 }
 
 $jump = 1;
@@ -94,9 +94,23 @@ while(!empty($text_lines[$offsets['text']])){
         $offsets['sound'] += $cut+$jump;
         $offsets['text']++;
 
+        $len = shell_exec("soxi -d $tmp_file");
+        $len = explode(":",$len);
+        $len = end($len);
+
+        $offsets['rates'][] = $len / mb_strlen($text);
+
         file_put_contents($dir.'/offsets.json', json_encode($offsets));
         file_put_contents($dir.'/output.json', json_encode($output));
         $cut = 0;
+        $jump = 1;
+    } else if($cmd == 'd') {
+        $offsets['sound'] += $cut+$jump;
+        $offsets['text']++;
+
+        file_put_contents($dir.'/offsets.json', json_encode($offsets));
+        $cut = 0;
+        $jump = 1;
     }
 
 

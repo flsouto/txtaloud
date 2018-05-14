@@ -20,6 +20,7 @@ if(!file_exists($output_file)){
 
 $data = file_get_contents($output_file);
 $data = json_decode($data,true);
+echo count($data);
 
 $index = $argv[2] ?? array_rand($data);
 if(!isset($data[$index])){
