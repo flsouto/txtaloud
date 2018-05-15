@@ -96,6 +96,15 @@
 
         var container = document.getElementById('main');
 
+        var currentAudio = null;
+        function playEntry(index){
+            if(currentAudio){
+                currentAudio.src = "";
+            }
+            currentAudio = new Audio("data:audio/mp3;base64,"+entries[index].sound);
+            currentAudio.play();
+        }
+
         function refreshEntries(){
 
             container.innerHTML = '';
@@ -104,7 +113,7 @@
 
             for(var i=0; i<entries.length; i++){
 
-                entry += "<div class=entry>";
+                entry = "<div class=entry onClick='playEntry("+i+")'>";
 
                 for(var k in entries[i].text){
                     entry += "<div class='text' data-lang='"+k+"'>"+entries[i].text[k]+"</div>";
