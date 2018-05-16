@@ -134,6 +134,11 @@
             $(this).addClass('active');
         });
 
+        $.getJSON('/txtaloud/data',function(data){
+            entries = data;
+            refreshEntries();
+        });
+
     </script>
 
 
