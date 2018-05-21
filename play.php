@@ -1,10 +1,6 @@
 <?php
 
 if(empty($argv[1])){
-	die("Usa");
-}
-
-if(empty($argv[1])){
     die("usage: command DIR\n");
 }
 
@@ -20,17 +16,21 @@ if(!file_exists($output_file)){
 
 $data = file_get_contents($output_file);
 $data = json_decode($data,true);
-echo count($data);
 
 $index = $argv[2] ?? array_rand($data);
 if(!isset($data[$index])){
 	die("Undefined index: $index\n");
 }
 
+echo 'Total: '.count($data).' | Playing: '.$index.PHP_EOL;
+
 $row = $data[$index];
 
-echo current($row['text']);
-echo "\n";
+foreach($row['text'] as $k=>$v){
+    echo $k.': '.$v.PHP_EOL;
+}
+
+echo PHP_EOL;
 
 $audio = base64_decode($row['sound']);
 file_put_contents("tmp.mp3", $audio);
