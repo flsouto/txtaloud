@@ -58,13 +58,21 @@
         }
 
         .entry .text:before{
-            content:"» "
         }
 
         .entry .text{
+            margin-top:-3px;
             font-size:22px;
             padding:5px;
+            padding-top:2px;
         }
+        .entry .index{
+            font-size:12px;
+            position:relative;
+            top:-5px;
+            left:-5px;
+        }
+
     </style>
 
     <script>
@@ -114,9 +122,12 @@
             for(var i=0; i<entries.length; i++){
 
                 entry = "<div class=entry onClick='playEntry("+i+")'>";
+                entry += "<span class=index>"+i+"</span>";
 
                 for(var k in entries[i].text){
-                    entry += "<div class='text' data-lang='"+k+"'>"+entries[i].text[k]+"</div>";
+                    entry += "<div class='text' data-lang='"+k+"'>";
+                    entry += entries[i].text[k];
+                    entry += "</div>";
                 }
 
                 entry += "</div>";
