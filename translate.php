@@ -41,9 +41,20 @@ if(empty($argv[2])){
     if(count($lines2)!=count($lines)){
         die("Mismatch on number of lines!\n");
     }
-    
+
+    foreach($lines2 as $i => $line){
+        $line = trim($line);
+        if(empty($line)){
+            unset($lines2[$i]);
+        }
+    }
+
+    $lines2 = array_values($lines2);
+
     foreach($data as $i => &$row){
-        $row['text'][$lang] = $lines2[$i];
+        if(isset($lines2[$i])){
+            $row['text'][$lang] = $lines2[$i];
+        }
     }; unset($row);
 
     file_put_contents($output_file, json_encode($data));
