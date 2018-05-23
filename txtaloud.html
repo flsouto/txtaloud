@@ -73,11 +73,45 @@
             left:-5px;
         }
 
+        .entry .text:not(:first-of-type){
+            color:gray;
+        }
+
     </style>
 
     <script>
 
         var entries = [];
+        var randomQueue = [];
+
+        function getNextRandomIndex(){
+            if(!randomQueue.length){
+                for(var i=0; i<entries.length; i++){
+                    randomQueue.push(i);
+                }
+                randomQueue = shuffle(randomQueue);
+            }
+            return randomQueue.pop();
+        }
+
+        function shuffle(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+        }
 
         function upload(input){
 
@@ -111,6 +145,10 @@
             }
             currentAudio = new Audio("data:audio/mp3;base64,"+entries[index].sound);
             currentAudio.play();
+
+            $('.entry.active').removeClass('active');
+            $('.entry:eq('+index+')').addClass('active');
+
         }
 
         function refreshEntries(){
@@ -139,15 +177,19 @@
 
         }
 
-
-        $('#main').delegate('.entry','click',function(){
-            $('.entry.active').removeClass('active');
-            $(this).addClass('active');
-        });
-
         $.getJSON('/txtaloud/data',function(data){
             entries = data;
             refreshEntries();
+        });
+
+
+        $(document).on('dblclick',function(){
+            var index = getNextRandomIndex();
+            $('html,body').animate({
+                    scrollTop: $('.entry:eq('+index+')').offset().top},
+                'slow');
+
+            playEntry(index);
         });
 
     </script>
