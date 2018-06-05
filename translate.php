@@ -38,15 +38,27 @@ if(empty($argv[2])){
     $contents = file_get_contents($file);
     $lines2 = explode('|', $contents);
 
-    if(count($lines2)!=count($lines)){
-        die("Mismatch on number of lines!\n");
-    }
-
     foreach($lines2 as $i => $line){
         $line = trim($line);
         if(empty($line)){
             unset($lines2[$i]);
         }
+    }
+
+    if(!empty($argv[3])){
+        $lines2 = array_slice($lines2,0,$argv[3]);
+        $lines = array_slice($lines,0,$argv[3]);
+
+        echo end($lines2).PHP_EOL;
+        echo end($lines).PHP_EOL;
+
+        if(empty($argv[4])){
+            die();
+        }
+    }
+
+    if(count($lines2)!=count($lines)){
+        die("Mismatch on number of lines!\n");
     }
 
     $lines2 = array_values($lines2);
